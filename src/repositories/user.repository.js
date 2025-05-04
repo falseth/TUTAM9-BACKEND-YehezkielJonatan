@@ -2,6 +2,15 @@ const db = require("../database/pg.database");
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 
+exports.getAllUsers = async () => {
+    try {
+        const res = await db.query("SELECT * FROM users");
+        return res.rows;
+    } catch (error) {
+        console.error("Error executing query", error);
+    }
+};
+
 exports.createUser = async (user) => {
     try {
         const hash = bcrypt.hashSync(user.password, saltRounds);

@@ -1,6 +1,14 @@
 const userRepository = require("../repositories/user.repository");
 const baseResponse = require("../utils/baseResponse.util");
 
+exports.getAllUsers = async (req, res) => {
+    try {
+        const users = await userRepository.getAllUsers();
+        baseResponse(res, true, 200, "Users found", users);
+    } catch (error) {
+        baseResponse(res, false, 500, "Error retrieving users", error);
+    }
+};
 
 exports.createUser = async (req, res) => {
     if (!req.query.name || !req.query.email || !req.query.password) {
